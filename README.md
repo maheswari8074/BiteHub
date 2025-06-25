@@ -1,2 +1,2 @@
 # CraveRush
-"BiteHub – Where cravings meet code!"
+"CraveRush – Where cravings meet code!"
