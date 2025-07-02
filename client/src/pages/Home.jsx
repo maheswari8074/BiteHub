@@ -6,14 +6,14 @@ const Home = () => {
   // Food background images - replace with your actual images
   const foodImages = [
     {
-      url: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=1920&h=1080&fit=crop",
-      title: "Authentic Wood-Fired Pizza",
-      subtitle: "Crispy crust, fresh toppings, perfection in every bite",
+      url: "/src/assets/Burger.jpg",
+      title: "Delicious Gourmet Burgers",
+      subtitle: "Juicy, tender , and crafted with premium ingredients",
     },
     {
-      url: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=1920&h=1080&fit=crop",
-      title: "Farm Fresh Salads",
-      subtitle: "Healthy, vibrant, and bursting with natural flavors",
+      url: "/src/assets/ChickenBiryani..jpg",
+      title: "Hyderabadi Chicken Biryani",
+      subtitle: "A royal recipe layered with love, spices, and basmati rice",
     },
     {
       url: "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=1920&h=1080&fit=crop",
@@ -57,11 +57,35 @@ const Home = () => {
               index === currentSlide ? "opacity-100" : "opacity-0"
             }`}
           >
-            <img
-              src={image.url}
-              alt={image.title}
-              className="w-full h-full object-cover"
-            />
+            {/* Try different approaches for your local image */}
+            {image.url === "/src/assets/ChickenBiryani.jpg" ? (
+              // Special handling for your biryani image
+              <div
+                className="w-full h-full bg-cover bg-center bg-no-repeat"
+                style={{
+                  backgroundImage: `url(${image.url})`,
+                  backgroundPosition: "50% 30%", // Adjust these percentages
+                  backgroundSize: "cover",
+                }}
+              />
+            ) : (
+              // Regular img tag for other images
+              <img
+                src={image.url}
+                alt={image.title}
+                className="w-full h-full object-cover object-center"
+                onError={(e) => {
+                  console.log(`Failed to load image: ${image.url}`);
+                  e.target.style.display = "none";
+                }}
+                onLoad={(e) => {
+                  console.log(`Successfully loaded: ${image.url}`);
+                  console.log(
+                    `Image dimensions: ${e.target.naturalWidth}x${e.target.naturalHeight}`
+                  );
+                }}
+              />
+            )}
             {/* Dark overlay for better text readability */}
             <div className="absolute inset-0 bg-black bg-opacity-50"></div>
           </div>

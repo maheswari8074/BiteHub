@@ -1,5 +1,6 @@
 // Login.jsx
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
@@ -36,8 +37,15 @@ const Login = () => {
             Sign In
           </button>
         </form>
+
         <p className="text-center text-sm text-gray-600 mt-6">
-          Don’t have an account? <span className="text-orange-500 font-medium cursor-pointer hover:underline">Sign Up</span>
+          Don’t have an account?{" "}
+          <Link
+            to="/signup"
+            className="text-orange-500 font-medium cursor-pointer hover:underline"
+          >
+            Sign Up
+          </Link>
         </p>
       </div>
     </div>
