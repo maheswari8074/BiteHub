@@ -1,8 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Signup = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -23,14 +25,15 @@ const Signup = () => {
     setMessage("");
 
     try {
-      const res = await axios.post(
-        "http://localhost:5000/api/auth/register",
-        formData
-      );
-      setMessage("Registration successful! You can now log in.");
-      setFormData({ name: "", email: "", password: "" });
+      await axios.post("/api/auth/register", formData);
+      setMessage("Signup successful! Redirecting to login...");
+
+      // Redirect after 1.5 seconds
+      setTimeout(() => {
+        navigate("/login");
+      }, 1500);
     } catch (err) {
-      setMessage(err.response?.data?.error || "Registration failed");
+      setMessage(err.response?.data?.error || "Signup failed");
     }
   };
 
@@ -92,7 +95,7 @@ const Signup = () => {
         </form>
 
         {message && (
-          <p className="text-center text-sm text-red-600 mt-4">{message}</p>
+          <p className="text-center text-sm text-green-600 mt-4">{message}</p>
         )}
 
         <p className="text-center text-sm text-gray-600 mt-6">
