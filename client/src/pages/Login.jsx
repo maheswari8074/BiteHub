@@ -21,10 +21,10 @@ const Login = () => {
 
       // Save token and user info in localStorage
       localStorage.setItem("token", res.data.token);
-      localStorage.setItem("username", res.data.name);
+      localStorage.setItem("username", res.data.user.name);
 
       // Redirect to homepage after login
-      navigate("/");
+      navigate("/dashboard");
     } catch (err) {
       setMessage(err.response?.data?.error || "Login failed");
     }

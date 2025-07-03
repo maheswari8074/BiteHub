@@ -35,7 +35,6 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// Login route
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   console.log("📥 Login request received:", email);
@@ -55,14 +54,18 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ error: "Invalid credentials" });
     }
 
-    // If login successful
+    // ✅ Generate token AFTER successful login
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "2h",
+    });
+
+    // ✅ Send response
     console.log("✅ Login successful for:", email);
-    res
-      .status(200)
-      .json({
-        message: "Login successful",
-        user: { name: user.name, email: user.email },
-      });
+    res.status(200).json({
+      message: "Login successful",
+      token,
+      user: { name: user.name, email: user.email },
+    });
   } catch (err) {
     console.error("❌ Login Error:", err);
     res.status(500).json({ error: "Something went wrong" });

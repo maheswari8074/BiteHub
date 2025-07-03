@@ -2,10 +2,11 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
-
+const dashboardRoutes = require("./routes/dashboard");
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use("/api/dashboard", dashboardRoutes);
 
 // MongoDB connection
 mongoose
