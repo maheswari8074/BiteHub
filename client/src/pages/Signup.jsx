@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ const Signup = () => {
     password: "",
   });
 
-  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData((prev) => ({
@@ -22,18 +23,19 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage("");
+    setLoading(true);
 
     try {
       await axios.post("/api/auth/register", formData);
-      setMessage("Signup successful! Redirecting to login...");
+      toast.success("Signup successful! Redirecting to login...");
 
-      // Redirect after 1.5 seconds
       setTimeout(() => {
         navigate("/login");
       }, 1500);
     } catch (err) {
-      setMessage(err.response?.data?.error || "Signup failed");
+      toast.error(err.response?.data?.error || "Signup failed");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -88,15 +90,16 @@ const Signup = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-orange-500 text-white py-3 rounded-lg hover:bg-orange-600 font-medium transition-colors"
+            disabled={loading}
+            className={`w-full py-3 rounded-lg font-medium transition-colors ${
+              loading
+                ? "bg-orange-300 cursor-not-allowed"
+                : "bg-orange-500 hover:bg-orange-600 text-white"
+            }`}
           >
-            Sign Up
+            {loading ? "Creating..." : "Sign Up"}
           </button>
         </form>
-
-        {message && (
-          <p className="text-center text-sm text-green-600 mt-4">{message}</p>
-        )}
 
         <p className="text-center text-sm text-gray-600 mt-6">
           Already have an account?{" "}

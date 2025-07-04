@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-
+import { Toaster } from "react-hot-toast";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
@@ -10,6 +10,7 @@ import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import PrivateRoute from "./components/PrivateRoute"; // 👈 create this
 
 const App = () => {
   const location = useLocation();
@@ -18,6 +19,8 @@ const App = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <Toaster position="top-center" toastOptions={{ duration: 3000 }} />
+
       {!hideLayout && <Navbar />}
 
       <main className="flex-grow">
@@ -28,7 +31,15 @@ const App = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          {/* 🔐 Protected Route */}
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </main>
 
