@@ -1,13 +1,44 @@
-// pages/Contact.jsx
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await axios.post(
+        "http://localhost:5000/api/contact",
+        formData
+      );
+      if (res.data.success) {
+        toast.success("Message sent successfully!");
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        toast.error("Failed to send message.");
+      }
+    } catch (err) {
+      toast.error("Server error. Please try again later.");
+    }
+  };
+
   return (
-    <section className="py-20 bg-gray-900 text-white">
+    <section className="py-20 bg-orange-50 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4">Get In Touch</h2>
-          <p className="text-xl text-gray-400">
+          <h2 className="text-4xl text-gray-900 font-bold mb-4">Get In Touch</h2>
+          <p className="text-xl text-gray-900">
             We'd love to hear from you! Reach out with any questions, feedback,
             or just to say hi.
           </p>
@@ -41,12 +72,16 @@ const Contact = () => {
           {/* Contact Form */}
           <div className="bg-white text-gray-900 p-8 rounded-2xl shadow-xl">
             <h3 className="text-2xl font-bold mb-6">Send a Message</h3>
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
                 <label className="block mb-2 text-sm font-medium">Name</label>
                 <input
                   type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
                   placeholder="Your Name"
+                  required
                   className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-orange-500 outline-none"
                 />
               </div>
@@ -54,7 +89,11 @@ const Contact = () => {
                 <label className="block mb-2 text-sm font-medium">Email</label>
                 <input
                   type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
                   placeholder="you@example.com"
+                  required
                   className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-orange-500 outline-none"
                 />
               </div>
@@ -63,8 +102,12 @@ const Contact = () => {
                   Message
                 </label>
                 <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
                   rows="5"
                   placeholder="Your message..."
+                  required
                   className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-orange-500 outline-none"
                 ></textarea>
               </div>
@@ -88,6 +131,9 @@ const Contact = () => {
           </div>
         </div>
       </div>
+
+      {/* Toast Container */}
+      <ToastContainer position="top-center" autoClose={3000} />
     </section>
   );
 };

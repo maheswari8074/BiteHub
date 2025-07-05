@@ -148,7 +148,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="py-20 bg-white text-center">
+      <section className="py-20 bg-orange-50 text-center">
         <h2 className="text-4xl font-bold text-gray-900 mb-6">
           Why <span className="text-orange-500">BiteHub</span>?
         </h2>
@@ -180,7 +180,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="py-20 bg-gradient-to-r from-orange-500 to-red-600 text-white text-center">
+      <section className="py-20 bg-gradient-to-r from-orange-500 to-red-600 text-gray-900 text-center">
         <div className="max-w-4xl mx-auto px-6">
           <h2 className="text-4xl font-bold mb-4">
             Craving Something Delicious?
