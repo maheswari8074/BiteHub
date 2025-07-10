@@ -29,102 +29,75 @@ const Navbar = () => {
   };
 
   return (
-    <header className="bg-white shadow-md sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center py-4">
-        {/* Logo */}
-        <Link to="/" className="flex items-center space-x-2">
-          <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-red-600 rounded-full flex items-center justify-center">
-            <span className="text-white font-bold text-xl">🍽️</span>
-          </div>
-          <div>
-            <h1 className="text-2xl font-bold text-gray-800">BiteHub</h1>
-            <p className="text-xs text-gray-500">Culinary Excellence</p>
-          </div>
-        </Link>
-
-        {/* Nav Links (always visible except login/signup) */}
-        <nav className="hidden md:flex items-center space-x-8">
-          {["home", "menu", "about", "contact"].map((page) => (
-            <Link
-              key={page}
-              to={`/${page === "home" ? "" : page}`}
-              className="relative font-medium text-gray-700 transition-all duration-200 hover:text-orange-600 hover:font-semibold group"
-            >
-              {page.charAt(0).toUpperCase() + page.slice(1)}
-              <span className="absolute left-0 bottom-[-2px] w-0 h-0.5 bg-orange-500 transition-all group-hover:w-full"></span>
-            </Link>
-          ))}
-        </nav>
-
-        {/* Right Side */}
-        <div className="flex items-center gap-4">
-          {user ? (
-            <div className="relative">
-              {/* Avatar Button */}
-              <div
-                tabIndex={0}
-                className="peer w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold text-lg cursor-pointer"
-              >
-                {getInitial(user.name)}
-              </div>
-
-              {/* Dropdown */}
-              <div className="absolute right-0 mt-2 w-44 bg-white rounded-xl shadow-lg py-2 opacity-0 peer-hover:opacity-100 hover:opacity-100 transition-opacity duration-200 z-50">
-                <Link
-                  to="/"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                  🏠 Home
-                </Link>
-                <Link
-                  to="/menu"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                  📋 Menu
-                </Link>
-                <Link
-                  to="/about"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                  📖 About
-                </Link>
-                <Link
-                  to="/contact"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                  📞 Contact
-                </Link>
-
-                <hr className="my-2" />
-
-                <Link
-                  to="/dashboard"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                  📊 Dashboard
-                </Link>
-                <Link
-                  to="/profile"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                >
-                  👤 Profile
-                </Link>
-                <button
-                  onClick={handleLogout}
-                  className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
-                >
-                  🚪 Logout
-                </button>
-              </div>
+    <header className="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-sm">
+      <div className="max-w-7xl mx-auto px-6 py-6">
+        <div className="flex justify-between items-center">
+          {/* Logo */}
+          <Link to="/" className="flex items-center space-x-3 cursor-pointer">
+            <div className="w-12 h-12 bg-gradient-to-r from-amber-600 to-orange-600 rounded-full flex items-center justify-center shadow-lg">
+              <span className="text-white font-bold text-xl">B</span>
             </div>
-          ) : (
-            <Link
-              to="/login"
-              className="bg-orange-500 text-white px-6 py-2 rounded-full hover:bg-orange-600 font-medium transition-colors"
-            >
-              Login
-            </Link>
-          )}
+            <div>
+              <h1 className="text-3xl font-bold text-white tracking-wider">
+                BiteHub
+              </h1>
+              <p className="text-xs text-amber-200 uppercase tracking-widest">
+                Culinary Excellence
+              </p>
+            </div>
+          </Link>
+
+          {/* Navigation Links */}
+          <nav className="hidden md:flex items-center space-x-12">
+            {["HOME", "MENU", "ABOUT", "CONTACT"].map((item) => (
+              <Link
+                key={item}
+                to={item === "HOME" ? "/" : `/${item.toLowerCase()}`}
+                className="text-white/90 hover:text-amber-400 transition-colors duration-300 text-sm font-medium tracking-widest relative group"
+              >
+                {item}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-amber-400 transition-all duration-300 group-hover:w-full"></span>
+              </Link>
+            ))}
+          </nav>
+
+          {/* User Avatar or Login */}
+          <div className="flex items-center gap-4">
+            {user ? (
+              <div className="relative group">
+                <div className="w-10 h-10 bg-gradient-to-r from-amber-600 to-orange-600 rounded-full flex items-center justify-center text-white font-bold cursor-pointer">
+                  {getInitial(user.name)}
+                </div>
+                <div className="absolute right-0 mt-2 w-48 bg-black/90 backdrop-blur-sm rounded-lg shadow-xl py-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-50">
+                  <Link
+                    to="/dashboard"
+                    className="block px-4 py-2 text-sm text-white hover:bg-amber-600/20"
+                  >
+                    Dashboard
+                  </Link>
+                  <Link
+                    to="/profile"
+                    className="block px-4 py-2 text-sm text-white hover:bg-amber-600/20"
+                  >
+                    Profile
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-amber-600/20"
+                  >
+                    Logout
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <Link
+                to="/login"
+                className="bg-gradient-to-r from-amber-600 to-orange-600 text-white px-6 py-2 rounded-full hover:from-amber-700 hover:to-orange-700 font-medium transition-all duration-300 transform hover:scale-105"
+              >
+                Login
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     </header>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ChevronUp } from "lucide-react"; // You can use HeroIcons or any SVG if you prefer
+import { ChevronUp } from "lucide-react";
 
 const Footer = () => {
   const [showTopButton, setShowTopButton] = useState(false);
@@ -18,62 +18,47 @@ const Footer = () => {
   };
 
   return (
-    <footer className="relative bg-[#111] text-white py-10">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
-          {/* Logo & Title */}
-          <div className="flex items-center justify-center space-x-3 mb-5">
-            <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-red-600 rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-xl">🍽️</span>
-            </div>
-            <div>
-              <h3 className="text-2xl font-bold">BiteHub</h3>
-              <p className="text-xs text-gray-400">Culinary Excellence</p>
-            </div>
+    <footer className="relative bg-gradient-to-t from-black to-gray-900 text-white pt-16 pb-10">
+      <div className="max-w-7xl mx-auto px-4 text-center">
+        {/* Logo */}
+        <div className="flex justify-center items-center gap-3 mb-5">
+          <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-red-600 rounded-full flex items-center justify-center">
+            <span className="text-white font-bold text-xl">🍽️</span>
           </div>
-
-          {/* Tagline */}
-          <p className="text-gray-400 mb-6 max-w-2xl mx-auto text-sm sm:text-base">
-            Where every bite tells a story of passion, quality, and culinary
-            mastery. Thank you for choosing BiteHub for your dining experience.
-          </p>
-
-          {/* Navigation Links */}
-          <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-400 mb-6">
-            <Link to="/" className="hover:text-orange-500 transition-colors">
-              Home
-            </Link>
-            <Link
-              to="/menu"
-              className="hover:text-orange-500 transition-colors"
-            >
-              Menu
-            </Link>
-            <Link
-              to="/about"
-              className="hover:text-orange-500 transition-colors"
-            >
-              About
-            </Link>
-            <Link
-              to="/contact"
-              className="hover:text-orange-500 transition-colors"
-            >
-              Contact
-            </Link>
-            <Link
-              to="/support"
-              className="hover:text-orange-500 transition-colors"
-            >
-              Support
-            </Link>
+          <div className="text-left">
+            <h3 className="text-2xl font-bold">BiteHub</h3>
+            <p className="text-xs text-gray-400">Culinary Excellence</p>
           </div>
+        </div>
 
-          {/* Copyright */}
-          <div className="border-t border-gray-800 pt-6 text-gray-500 text-xs sm:text-sm">
-            © 2025 BiteHub. All rights reserved. Made with ❤️ for food lovers
-            everywhere.
-          </div>
+        {/* Tagline */}
+        <p className="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base mb-6">
+          Where every bite tells a story of passion, quality, and culinary
+          mastery. Thank you for choosing{" "}
+          <span className="text-orange-500 font-medium">BiteHub</span> for your
+          dining experience.
+        </p>
+
+        {/* Navigation */}
+        <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-400 mb-6">
+          {["/", "/menu", "/about", "/contact", "/support"].map((path, i) => (
+            <Link
+              key={path}
+              to={path}
+              className="hover:text-orange-500 transition-all duration-200"
+            >
+              {["Home", "Menu", "About", "Contact", "Support"][i]}
+            </Link>
+          ))}
+        </div>
+
+        {/* Divider */}
+        <div className="w-1/2 mx-auto h-px bg-gray-800 mb-4" />
+
+        {/* Copyright */}
+        <div className="text-gray-500 text-xs sm:text-sm">
+          © 2025 BiteHub. All rights reserved. Made with{" "}
+          <span className="text-pink-400">❤️</span> for food lovers everywhere.
         </div>
       </div>
 

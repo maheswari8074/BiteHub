@@ -1,55 +1,86 @@
-// pages/About.jsx
 import React from "react";
 
 const About = () => {
   return (
-    <section className="py-20 bg-orange-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <div>
-          <h2 className="text-4xl font-bold text-gray-900 mb-6">
-            Our Culinary Story
+    <div className="min-h-screen bg-gradient-to-b from-black via-[#111] to-gray-900 text-white pt-28 px-6">
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <h2 className="text-5xl font-light tracking-wide mb-4">
+            Our <span className="italic text-amber-400">Culinary Story</span>
           </h2>
-          <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-            Founded in 2020 by a team of passionate food enthusiasts, BiteHub
-            was born from a simple belief: everyone deserves restaurant-quality
-            meals, delivered fast.
+          <div className="w-24 h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto mb-6"></div>
+          <p className="text-lg text-white/70 font-light max-w-3xl mx-auto">
+            Discover the passion, philosophy, and people behind BiteHub — where
+            food isn't just served, it's celebrated.
           </p>
-          <p className="text-gray-600 mb-8 leading-relaxed">
-            Our award-winning chefs blend traditional techniques with modern
-            innovation to deliver dishes that taste incredible and look
-            stunning.
-          </p>
-
-          <div className="grid grid-cols-3 gap-6 mb-8">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-orange-500">500+</div>
-              <div className="text-gray-600">Signature Dishes</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-orange-500">15+</div>
-              <div className="text-gray-600">Expert Chefs</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-orange-500">24/7</div>
-              <div className="text-gray-600">Service</div>
-            </div>
-          </div>
-
-          <button className="bg-orange-500 text-white px-8 py-3 rounded-full hover:bg-orange-600 transition-colors font-medium">
-            Learn More About Us
-          </button>
         </div>
 
-        <div className="rounded-3xl shadow-xl h-96 bg-gradient-to-br from-orange-100 to-red-100 flex items-center justify-center">
-          <div className="text-center text-gray-600">
-            <div className="text-6xl mb-4">👨‍🍳</div>
-            <p className="text-lg font-medium">Chef in Action</p>
-            <p className="text-sm">Add your custom image here</p>
-            <p className="text-sm">(Recommended: 800x600px)</p>
+        {/* Story Section */}
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          {/* Text */}
+          <div className="space-y-6">
+            <h3 className="text-3xl font-light text-amber-300 tracking-wider">
+              Founded in 2020
+            </h3>
+            <p className="text-white/80 text-lg leading-relaxed">
+              BiteHub was born from a simple belief: everyone deserves
+              restaurant-quality meals, delivered fast. Our team of passionate
+              chefs, tech innovators, and foodies work together to make that a
+              reality.
+            </p>
+            <p className="text-white/70">
+              Our award-winning chefs blend traditional techniques with modern
+              flavors to create unforgettable meals. Whether it’s a quick lunch
+              or a fine dinner, we deliver more than just food — we deliver an
+              experience.
+            </p>
+          </div>
+
+          {/* Chef Image / Emoji */}
+          <div className="flex justify-center md:justify-end">
+            <div className="text-[7rem] md:text-[9rem] drop-shadow-lg animate-pulse">
+              👨‍🍳
+            </div>
+          </div>
+        </div>
+
+        {/* Core Values */}
+        <div className="mt-24 text-center">
+          <h3 className="text-4xl font-light tracking-wider mb-6">
+            <span className="italic text-orange-400">What Drives Us</span>
+          </h3>
+          <div className="w-24 h-px bg-gradient-to-r from-transparent via-orange-400 to-transparent mx-auto mb-10"></div>
+
+          <div className="grid md:grid-cols-3 gap-10">
+            {[
+              {
+                title: "Flavor First",
+                desc: "We never compromise on taste. Every dish is fine-tuned to perfection.",
+              },
+              {
+                title: "Fresh Always",
+                desc: "We source only fresh and high-quality ingredients every day.",
+              },
+              {
+                title: "Tech + Tradition",
+                desc: "Modern tech meets timeless culinary techniques at BiteHub.",
+              },
+            ].map((item, index) => (
+              <div
+                key={index}
+                className="p-6 bg-black border border-white/10 rounded-xl shadow-sm hover:shadow-md transition"
+              >
+                <h4 className="text-xl font-semibold mb-3 text-amber-400">
+                  {item.title}
+                </h4>
+                <p className="text-white/70">{item.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 
