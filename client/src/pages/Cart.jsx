@@ -29,10 +29,40 @@ const Cart = ({ cart, setCart }) => {
     );
   };
 
-  const handleCheckout = () => {
-    setCart([]);
-    localStorage.removeItem("cart");
-    navigate("/thank-you");
+  const handleCheckout = async () => {
+    const token = localStorage.getItem("token");
+    const user = JSON.parse(localStorage.getItem("user")); // assuming user stored after login
+
+    if (!token || !user) {
+      alert("Please log in to place an order.");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:5555/api/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          userId: user._id, // or user.id depending on how you stored it
+          items: cart,
+          amount: total,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to place order");
+      }
+
+      setCart([]);
+      localStorage.removeItem("cart");
+      navigate("/thank-you");
+    } catch (error) {
+      console.error("Checkout error:", error);
+      alert("Order placement failed.");
+    }
   };
 
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);

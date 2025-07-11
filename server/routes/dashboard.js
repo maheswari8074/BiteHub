@@ -6,7 +6,7 @@ const Order = require("../models/Order");
 
 router.get("/", verifyToken, async (req, res) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user._id;
 
     const user = await User.findById(userId).select("-password");
     if (!user) return res.status(404).json({ error: "User not found" });
@@ -16,7 +16,10 @@ router.get("/", verifyToken, async (req, res) => {
     // Stats
     const totalOrders = orders.length;
     const totalSpent = orders.reduce((sum, o) => sum + o.amount, 0);
-    const favoriteDishes = [...new Set(orders.map((o) => o.item))];
+
+    const favoriteDishes = [
+      ...new Set(orders.flatMap((o) => o.items.map((item) => item.name))),
+    ];
 
     // Order trends by date
     const orderTrends = {};
