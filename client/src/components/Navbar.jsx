@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { ShoppingCart, Sun, Moon } from "lucide-react";
 import toast from "react-hot-toast";
 
-const Navbar = () => {
+const Navbar = ({ cart = [] }) => {
   const [user, setUser] = useState(null);
+  const [darkMode, setDarkMode] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Load user
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -16,6 +19,16 @@ const Navbar = () => {
     }
   }, [location]);
 
+  // Apply/remove dark mode class on <html>
+  useEffect(() => {
+    const html = document.documentElement;
+    if (darkMode) {
+      html.classList.add("dark");
+    } else {
+      html.classList.remove("dark");
+    }
+  }, [darkMode]);
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -24,12 +37,10 @@ const Navbar = () => {
     navigate("/login");
   };
 
-  const getInitial = (name) => {
-    return name ? name.charAt(0).toUpperCase() : "U";
-  };
+  const getInitial = (name) => (name ? name.charAt(0).toUpperCase() : "U");
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-sm">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-black/30 dark:bg-gray-900/70 backdrop-blur-sm shadow-md">
       <div className="max-w-7xl mx-auto px-6 py-6">
         <div className="flex justify-between items-center">
           {/* Logo */}
@@ -47,7 +58,7 @@ const Navbar = () => {
             </div>
           </Link>
 
-          {/* Navigation Links */}
+          {/* Nav links */}
           <nav className="hidden md:flex items-center space-x-12">
             {["HOME", "MENU", "ABOUT", "CONTACT"].map((item) => (
               <Link
@@ -61,8 +72,33 @@ const Navbar = () => {
             ))}
           </nav>
 
-          {/* User Avatar or Login */}
+          {/* Cart + User + Dark Mode */}
           <div className="flex items-center gap-4">
+            {/* Cart */}
+            {user && (
+              <Link
+                to="/cart"
+                className="relative text-white hover:text-amber-400 transition"
+              >
+                <ShoppingCart className="w-6 h-6" />
+                {cart.length > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                    {cart.reduce((sum, item) => sum + item.quantity, 0)}
+                  </span>
+                )}
+              </Link>
+            )}
+
+            {/* Theme Toggle */}
+            <button
+              onClick={() => setDarkMode(!darkMode)}
+              className="text-white hover:text-yellow-400 transition"
+              title="Toggle Theme"
+            >
+              {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            </button>
+
+            {/* User / Login */}
             {user ? (
               <div className="relative group">
                 <div className="w-10 h-10 bg-gradient-to-r from-amber-600 to-orange-600 rounded-full flex items-center justify-center text-white font-bold cursor-pointer">

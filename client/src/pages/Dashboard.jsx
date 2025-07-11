@@ -40,73 +40,78 @@ const Dashboard = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-xl text-orange-600 font-medium">
+      <div className="min-h-screen flex items-center justify-center text-xl text-amber-400 font-semibold">
         Loading dashboard...
       </div>
     );
   }
 
   return (
-    <div className="p-6 min-h-screen bg-gradient-to-br from-orange-50 via-red-50 to-pink-50">
+    <div className="min-h-screen bg-[#111] text-white py-16 px-4">
       <div className="max-w-7xl mx-auto">
-        <div className="mb-8 text-center">
-          <h1 className="text-5xl font-bold text-gray-800 mb-2">
-            BiteHub Dashboard 🍽️
+        {/* Header */}
+        <div className="text-center mb-12 pt-20">
+          <h1 className="text-5xl font-light tracking-wide inline-block relative">
+            <span className="italic text-amber-400">Your</span> Dashboard 🍽️
+            <span className="block h-[2px] w-16 bg-amber-400 mx-auto mt-3 rounded-full"></span>
           </h1>
-          <p className="text-gray-600 text-lg">
-            Your personalized food delivery experience
+          <p className="text-gray-400 mt-4 text-lg">
+            Manage & monitor your BiteHub journey
           </p>
         </div>
 
+        {/* Error Message */}
         {error && (
-          <div className="bg-red-100 text-red-700 px-4 py-2 rounded-xl mb-6">
+          <div className="bg-red-500 text-white px-4 py-2 rounded-lg mb-6 text-center">
             {error}
           </div>
         )}
 
         {/* Tabs */}
-        <div className="mb-8">
-          <div className="bg-white rounded-3xl shadow-lg p-2">
-            <nav className="flex space-x-2">
+        <div className="mb-10">
+          <div className="bg-[#1a1a1a] border border-gray-800 rounded-3xl p-3 shadow-inner">
+            <nav className="flex justify-center gap-4">
               {[
                 {
                   key: "overview",
                   label: "📊 Overview",
-                  icon: <TrendingUp size={20} />,
+                  icon: <TrendingUp size={18} />,
                 },
                 {
                   key: "analytics",
                   label: "📈 Analytics",
-                  icon: <BarChart size={20} />,
+                  icon: <BarChart size={18} />,
                 },
               ].map((tab) => (
                 <button
                   key={tab.key}
                   onClick={() => setActiveTab(tab.key)}
-                  className={`flex items-center space-x-2 py-3 px-6 rounded-2xl font-medium text-sm transition-all ${
+                  className={`flex items-center gap-2 px-5 py-3 rounded-full font-medium transition-all duration-300 text-sm ${
                     activeTab === tab.key
-                      ? "bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-lg"
-                      : "text-gray-600 hover:text-gray-800 hover:bg-gray-50"
+                      ? "bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-md"
+                      : "bg-black/30 text-gray-300 hover:bg-black/50"
                   }`}
                 >
                   {tab.icon}
-                  <span>{tab.label}</span>
+                  {tab.label}
                 </button>
               ))}
             </nav>
           </div>
         </div>
 
-        {/* Section */}
-        {activeTab === "overview" && (
-          <OverviewSection
-            userData={dashboardData?.user}
-            dashboardData={dashboardData}
-          />
-        )}
-        {activeTab === "analytics" && (
-          <AnalyticsSection dashboardData={dashboardData} />
-        )}
+        {/* Active Section */}
+        <div className="mt-8">
+          {activeTab === "overview" && (
+            <OverviewSection
+              userData={dashboardData?.user}
+              dashboardData={dashboardData}
+            />
+          )}
+          {activeTab === "analytics" && (
+            <AnalyticsSection dashboardData={dashboardData} />
+          )}
+        </div>
       </div>
     </div>
   );
