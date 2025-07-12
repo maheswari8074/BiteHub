@@ -32,7 +32,6 @@ const Login = () => {
       setLoading(false);
     }
   };
-
   return (
     <div className="min-h-screen bg-black relative">
       {/* Background Image */}

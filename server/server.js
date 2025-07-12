@@ -15,13 +15,18 @@ app.use(express.json());
 const authRoutes = require("./routes/auth");
 const dashboardRoutes = require("./routes/dashboard");
 const contactRoutes = require("./routes/contact");
-const orderRoutes = require("./routes/Order"); // 🔥 Fixed case issue here
-
+const orderRoutes = require("./routes/Order"); // Fixed case issue here
+const profileRoutes = require("./routes/profile");
+const favRoutes = require("./models/Favorite");
+const addressRoutes = require("./routes/address");
 // Route Handlers
 app.use("/api/auth", authRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/profile", profileRoutes);
+app.use("/api/favorites", favRoutes);
+app.use("/api/addresses", addressRoutes);
 
 // MongoDB Connection
 mongoose

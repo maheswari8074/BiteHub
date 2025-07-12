@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Search, Heart, ShoppingCart, Star, Filter } from "lucide-react";
 
-const Menu = ({ cart, setCart }) => {
+const Menu = ({ cart, setCart, handleFavorite }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [favorites, setFavorites] = useState([]);
@@ -401,7 +401,6 @@ const Menu = ({ cart, setCart }) => {
           <h1 className="text-4xl md:text-5xl font-light tracking-wider text-white mb-4">
             Our<span className="italic text-amber-400">Menu</span>
           </h1>
-
           <div className="w-32 h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto mb-6" />
           <p className="text-xl text-white/70 font-light tracking-wide">
             Discover authentic Indian flavors crafted with passion
@@ -413,7 +412,6 @@ const Menu = ({ cart, setCart }) => {
       <div className="bg-gray-900 pb-4 px-4 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row gap-4 items-center justify-between mb-4">
-            {/* Search */}
             <div className="relative flex-1 max-w-md">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               <input
@@ -424,8 +422,6 @@ const Menu = ({ cart, setCart }) => {
                 className="w-full pl-10 pr-4 py-3 bg-gray-800 border border-gray-700 rounded-full text-white placeholder-gray-400 focus:outline-none focus:border-amber-500 transition-colors"
               />
             </div>
-
-            {/* Sort */}
             <div className="flex items-center gap-2">
               <Filter className="text-gray-400 w-5 h-5" />
               <select
@@ -440,7 +436,6 @@ const Menu = ({ cart, setCart }) => {
             </div>
           </div>
 
-          {/* Categories */}
           <div className="flex flex-wrap gap-2 justify-center">
             {categories.map((category) => (
               <button
@@ -459,7 +454,6 @@ const Menu = ({ cart, setCart }) => {
         </div>
       </div>
 
-      {/* Menu Items */}
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {sortedItems.map((item) => (
@@ -475,7 +469,15 @@ const Menu = ({ cart, setCart }) => {
                 />
                 <div className="absolute top-4 right-4 flex gap-2">
                   <button
-                    onClick={() => toggleFavorite(item.id)}
+                    onClick={() => {
+                      toggleFavorite(item.id);
+                      handleFavorite({
+                        name: item.name,
+                        price: item.price,
+                        image: item.image,
+                        rating: item.rating,
+                      });
+                    }}
                     className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${
                       favorites.includes(item.id)
                         ? "bg-red-500 text-white scale-110"
@@ -522,7 +524,6 @@ const Menu = ({ cart, setCart }) => {
                   <span className="text-2xl font-bold text-amber-400">
                     ₹{item.price}
                   </span>
-
                   {cart.find((cartItem) => cartItem.id === item.id) ? (
                     <div className="flex items-center gap-2">
                       <button
@@ -568,7 +569,6 @@ const Menu = ({ cart, setCart }) => {
         )}
       </div>
 
-      {/* Call to Action */}
       <section className="bg-gradient-to-b from-gray-900 via-gray-950 to-black py-20 px-4 text-center">
         <div className="max-w-4xl mx-auto">
           <h3 className="text-4xl md:text-5xl font-light text-white mb-4">
@@ -579,7 +579,7 @@ const Menu = ({ cart, setCart }) => {
             <span className="text-orange-300 font-medium">BiteHub</span>.
           </p>
           <button className="inline-block bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-full text-sm uppercase tracking-wider transition duration-300 shadow-lg transform hover:scale-105">
-            Place Your Order →
+            Place Your Order →<a href="/menu"></a>
           </button>
         </div>
       </section>

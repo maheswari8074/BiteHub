@@ -18,6 +18,7 @@ import Dashboard from "./pages/Dashboard";
 import ThankYou from "./pages/ThankYou";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import ProtectedRoute from "./components/ProtectedRoute";
 import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
@@ -46,18 +47,28 @@ function App() {
       <main className="flex-grow pt-24">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route
-            path="/menu"
-            element={<Menu cart={cart} setCart={setCart} />}
-          />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/thank-you" element={<ThankYou />} />
+
+          {/* Protected Routes */}
+          <Route
+            path="/menu"
+            element={
+              <PrivateRoute>
+                <Menu cart={cart} setCart={setCart} />
+              </PrivateRoute>
+            }
+          />
           <Route
             path="/cart"
-            element={<Cart cart={cart} setCart={setCart} />}
+            element={
+              <PrivateRoute>
+                <Cart cart={cart} setCart={setCart} />
+              </PrivateRoute>
+            }
           />
           <Route
             path="/dashboard"

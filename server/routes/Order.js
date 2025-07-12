@@ -3,7 +3,7 @@ const router = express.Router();
 const Order = require("../models/Order");
 const authenticate = require("../middleware/authMiddleware"); // ensure correct path
 
-// ✅ Create a new order
+// Create a new order
 router.post("/", authenticate, async (req, res) => {
   try {
     const { items, amount } = req.body;
@@ -22,5 +22,5 @@ router.post("/", authenticate, async (req, res) => {
   }
 });
 
-// ✅ You MUST export the router
+//  You MUST export the router
 module.exports = router;
